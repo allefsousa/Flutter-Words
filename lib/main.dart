@@ -10,7 +10,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Startup Name Generator',
       theme: ThemeData(
@@ -18,13 +17,15 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Startup Name Generator"),
-        ),
         body: Center(
           child: RandomWordsState(),
         ),
       ),
     );
+
+
   }
+
+
+
 }

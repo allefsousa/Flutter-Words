@@ -13,7 +13,15 @@ class _RandomWordsStateState extends State<RandomWordsState> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildSuggestions();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Startup Name Generator'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
+        ],
+      ),
+      body: _buildSuggestions(),
+    );
   }
 
   Widget _buildSuggestions() {
@@ -43,15 +51,39 @@ class _RandomWordsStateState extends State<RandomWordsState> {
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),
-      onTap: (){
+      onTap: () {
         setState(() {
-          if (alreadySaved){
+          if (alreadySaved) {
             _saved.remove(pair);
-          }else{
+          } else {
             _saved.add(pair);
           }
         });
       },
     );
+  }
+
+  void _pushSaved() {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+      final Iterable<ListTile> tiles = _saved.map((WordPair pair) {
+        return ListTile(
+          title: Text(
+            pair.asPascalCase,
+            style: _biggerFont,
+          ),
+        );
+      });
+      final List<Widget> divided =
+          ListTile.divideTiles(tiles: tiles, context: context).toList();
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Saved Suggestions"),
+        ),
+        body: ListView(
+          children: divided,
+        ),
+      );
+    }));
   }
 }
